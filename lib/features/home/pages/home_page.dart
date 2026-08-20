@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'loadingPage.dart';
+import 'Organic.dart';
 
 class HomePage extends StatelessWidget{
   const HomePage({super.key});
@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget{
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const loadingPage(),
+            builder: (context) => const Organic(),
           ),
         );
       },
@@ -23,39 +23,55 @@ class HomePage extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/logo.png', width: 260,),
-              const SizedBox(height: 20,),
-              Stack(
-                alignment: Alignment.center,
-                children:[
-                  Text(
-                    'eltrack', 
-                    style: GoogleFonts.limelight(
-                    fontSize: 35, 
-                    foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = const Color(0xFFFDF6ED),
-                    ),
-                  ),
+              Image.asset('assets/images/logo.png', width: 805,),
+              // const SizedBox(height: 100,),
+                Transform.translate(
+                  offset: const Offset(0, -230),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children:[
+                      //ini buat shadow nya
+                      Transform.translate(
+                        offset : const Offset(0, 7),
+                          child : Text(
+                          'eltrack', 
+                          style: GoogleFonts.limelight(
+                          fontSize: 40, 
+                          foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 10
+                          ..strokeJoin = StrokeJoin.round
+                          ..color = Colors.black.withOpacity(0.10)
+                          ),
+                        ),
+                      ),
 
-                  Text(
-                    'eltrack',
-                    style: GoogleFonts.limelight(
-                    fontSize: 35,
-                    color: const Color(0xFF768973),
-                    shadows: const[
-                      Shadow(
-                      offset: Offset(4,4),
-                      blurRadius: 0,
-                      color:Colors.black,
-                      )
-                    ]
-                    ),
+
+                      //Outline Creme
+                      Text(
+                        'eltrack',
+                        style : GoogleFonts.limelight(
+                          fontSize : 40,
+                          foreground : Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 10
+                          ..strokeJoin = StrokeJoin.round
+                          ..color = const Color(0xFFFDF6ED)
+                        ),
+                      ),
+
+                      //ini warna tulisanya 
+                      Text(
+                        'eltrack',
+                        style: GoogleFonts.limelight(
+                        fontSize: 40,
+                        color: const Color(0xFF768973),
+                        ),
+                      ),
+],
                   ),
-                ],
-              ),
-            ]
+                ),
+            ],
           )
         )
       )
