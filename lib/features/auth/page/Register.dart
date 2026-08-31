@@ -272,7 +272,10 @@ class _RegisterState extends State<Register> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const Discover(),
+              builder: (context) => Discover(
+              userId: result['user_id'],
+              points: 0,
+            ),
             ),
           );
         } else {

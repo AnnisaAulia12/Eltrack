@@ -2,6 +2,7 @@ import 'package:eltrack_mobile/features/auth/page/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:eltrack_mobile/features/auth/controlers/LoginControllers.dart';
+import 'package:eltrack_mobile/features/home/pages/Discover.dart';
 import 'Register.dart';
 
 class Login extends StatefulWidget {
@@ -33,9 +34,6 @@ class _LoginState extends State<Login> {
         child: Stack(
           children: [
 
-            // =========================
-            // HEADER IMAGE
-            // =========================
             Positioned(
               top: 0,
               left: 0,
@@ -377,6 +375,16 @@ class _LoginState extends State<Login> {
                               debugPrint('User ID: ${result['user']?['id']}');
                               debugPrint('Username: ${result['user']?['username']}');
                               debugPrint('Role: ${result['user']?['role']}');
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Discover(
+                                    userId: result['user']['id'],
+                                    points: result['user']['points'],
+                                  ),
+                                ),
+                              );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
