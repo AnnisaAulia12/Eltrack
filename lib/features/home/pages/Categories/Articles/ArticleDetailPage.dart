@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
+
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
 
 class ArticleDetailPage extends StatelessWidget {
   final dynamic article;
   final String category;
+  final int userId;
+  final int points;
 
   const ArticleDetailPage({
     super.key,
     required this.article,
     required this.category,
+    required this.userId,
+    required this.points,
+  
   });
 
   static const Color primaryGreen =
@@ -275,7 +283,36 @@ class ArticleDetailPage extends StatelessWidget {
               ),
             ),
 
-            _buildBottomNavigation(),
+            EltrackBottomNav(
+              currentIndex: 0,
+
+              onHome: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+
+              onScanner: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => scannerPage(
+                      userId: userId,
+                      points: points,
+                    ),
+                  ),
+                );
+              },
+
+              onStore: () {
+                // nanti Store
+              },
+
+              onProfile: () {
+                // nanti Profile
+              },
+            ),
           ],
         ),
       ),
@@ -376,50 +413,5 @@ class ArticleDetailPage extends StatelessWidget {
     } catch (_) {
       return '';
     }
-  }
-
-  Widget _buildBottomNavigation() {
-    return Container(
-      height: 58,
-      decoration:
-          const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color:
-                Color(0x26000000),
-            blurRadius: 6,
-            offset:
-                Offset(0, -4),
-          ),
-        ],
-      ),
-      child: const Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceAround,
-        children: [
-          Icon(
-            Icons.home_rounded,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.center_focus_weak,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.storefront_outlined,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.person,
-            color: darkGreen,
-            size: 22,
-          ),
-        ],
-      ),
-    );
   }
 }

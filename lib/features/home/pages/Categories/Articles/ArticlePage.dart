@@ -3,21 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:eltrack_mobile/features/home/service/articleService.dart';
 import 'package:eltrack_mobile/features/home/pages/Categories/Articles/ArticleDetailPage.dart';
 
+
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
+
 class ArticlePage extends StatefulWidget {
+  final int userId;
+  final int points;
+
   final String category;
   final String title;
 
   const ArticlePage({
     super.key,
+    required this.userId,
+    required this.points,
     required this.category,
     required this.title,
   });
 
   @override
-  State<ArticlePage> createState() => _ArticlesPageState();
+  State<ArticlePage> createState() => _ArticlePageState();
 }
 
-class _ArticlesPageState extends State<ArticlePage> {
+class _ArticlePageState extends State<ArticlePage> {
   static const Color primaryGreen = Color(0xFFA7C49E);
   static const Color darkGreen = Color(0xFF768973);
   static const Color lightGreen = Color(0xFFD4E3CF);
@@ -92,7 +101,36 @@ class _ArticlesPageState extends State<ArticlePage> {
               ),
             ),
 
-            _buildBottomNavigation(),
+            EltrackBottomNav(
+              currentIndex: 0,
+
+              onHome: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+
+              onScanner: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => scannerPage(
+                      userId: widget.userId,
+                      points: widget.points,
+                    ),
+                  ),
+                );
+              },
+
+              onStore: () {
+                // nanti Store
+              },
+
+              onProfile: () {
+                // nanti Profile
+              },
+            ),
           ],
         ),
       ),
@@ -315,10 +353,12 @@ class _ArticlesPageState extends State<ArticlePage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ArticleDetailPage(
+            ArticleDetailPage(
+              userId: widget.userId,
+              points: widget.points,
               article: article,
               category: widget.category,
-            ),
+            )
           ),
         );
       },

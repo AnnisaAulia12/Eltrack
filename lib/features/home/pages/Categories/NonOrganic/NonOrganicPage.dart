@@ -7,8 +7,19 @@ import 'package:eltrack_mobile/features/home/service/nearestDropoff_service.dart
 import 'package:eltrack_mobile/features/home/pages/Categories/Articles/ArticlePage.dart';
 import 'package:eltrack_mobile/features/home/pages/Categories/WasteGuide/WasteGuidePage.dart';
 
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
+
+
 class NonOrganicPage extends StatefulWidget {
-  const NonOrganicPage({super.key});
+  final int userId;
+  final int points;
+
+  const NonOrganicPage({
+    super.key,
+    required this.userId,
+    required this.points,
+  });
 
   @override
   State<NonOrganicPage> createState() => _NonOrganicPageState();
@@ -174,7 +185,36 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
               ),
             ),
 
-            _buildBottomNavigation(),
+            EltrackBottomNav(
+              currentIndex: 0,
+
+              onHome: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+
+              onScanner: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => scannerPage(
+                      userId: widget.userId,
+                      points: widget.points,
+                    ),
+                  ),
+                );
+              },
+
+              onStore: () {
+                // nanti Store
+              },
+
+              onProfile: () {
+                // nanti Profile
+              },
+            ),
           ],
         ),
       ),
@@ -236,10 +276,12 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ArticlePage(
+            builder: (context) => ArticlePage(
+              userId: widget.userId,
+              points: widget.points,
               category: 'non_organic',
               title: 'Non Organic',
-            ),
+            ) 
           ),
         );
       },
@@ -422,10 +464,12 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'non_organic',
                   typeName: 'Plastic Waste',
-                ),
+                )
               ),
             );
           },
@@ -438,7 +482,9 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'non_organic',
                   typeName: 'Paper & Board',
                 ),
@@ -454,7 +500,9 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'non_organic',
                   typeName: 'Glass',
                 ),
@@ -743,45 +791,5 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
     }
   }
 
-  Widget _buildBottomNavigation() {
-    return Container(
-      height: 58,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x26000000),
-            blurRadius: 6,
-            offset: Offset(0, -4),
-          ),
-        ],
-      ),
-      child: const Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceAround,
-        children: [
-          Icon(
-            Icons.home_rounded,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.center_focus_weak,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.storefront_outlined,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.person,
-            color: darkGreen,
-            size: 22,
-          ),
-        ],
-      ),
-    );
-  }
+
 }

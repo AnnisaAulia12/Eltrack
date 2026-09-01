@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:eltrack_mobile/features/home/service/wasteGuideService.dart';
 
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
+
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
+
 class WasteGuidePage extends StatefulWidget {
+  final int userId;
+  final int points;
+
   final String category;
   final String typeName;
 
   const WasteGuidePage({
     super.key,
+    required this.userId,
+    required this.points,
     required this.category,
     required this.typeName,
   });
 
   @override
-  State<WasteGuidePage> createState() => _WasteGuidePageState();
+  State<WasteGuidePage> createState() =>
+      _WasteGuidePageState();
 }
 
 class _WasteGuidePageState extends State<WasteGuidePage> {
@@ -94,7 +105,36 @@ class _WasteGuidePageState extends State<WasteGuidePage> {
               ),
             ),
 
-            _buildBottomNavigation(),
+            EltrackBottomNav(
+              currentIndex: 0,
+
+              onHome: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+
+              onScanner: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => scannerPage(
+                      userId: widget.userId,
+                      points: widget.points,
+                    ),
+                  ),
+                );
+              },
+
+              onStore: () {
+                // nanti Store
+              },
+
+              onProfile: () {
+                // nanti Profile
+              },
+            ),
           ],
         ),
       ),

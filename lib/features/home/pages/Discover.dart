@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -7,6 +8,9 @@ import 'package:eltrack_mobile/features/home/service/nearestDropoff_service.dart
 import 'package:eltrack_mobile/features/home/pages/Categories/Organic/OrganicPage.dart';
 import 'package:eltrack_mobile/features/home/pages/Categories/NonOrganic/NonOrganicPage.dart';
 import 'package:eltrack_mobile/features/home/pages/Categories/K3/K3Page.dart';
+
+
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
 
 class Discover extends StatefulWidget {
   final int userId;
@@ -254,7 +258,33 @@ class _DiscoverPageState extends State<Discover> {
                 ),
 
                 // bottom bar selalu ada
-                _buildBottomNavigation(),
+                EltrackBottomNav(
+                  currentIndex: 0,
+
+                  onHome: () {
+                    // sudah di Home
+                  },
+
+                  onScanner: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => scannerPage(
+                          userId: widget.userId,
+                          points: widget.points,
+                        ),
+                      ),
+                    );
+                  },
+
+                  onStore: () {
+                    // nanti Store
+                  },
+
+                  onProfile: () {
+                    // nanti Profile
+                  },
+                ),
               ],
             ),
           ),
@@ -266,10 +296,6 @@ class _DiscoverPageState extends State<Discover> {
       ),
     );
   }
-
-
-
-
 
   Widget _buildHeader() {
     return Row(
@@ -507,7 +533,7 @@ class _DiscoverPageState extends State<Discover> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OrganicPage(),
+                builder: (context) => OrganicPage( userId: widget.userId, points: widget.points,),
               ),
             );
           },
@@ -519,7 +545,7 @@ class _DiscoverPageState extends State<Discover> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NonOrganicPage(),
+                builder: (context) => NonOrganicPage( userId: widget.userId, points: widget.points,)
               ),
             );
           },
@@ -531,7 +557,7 @@ class _DiscoverPageState extends State<Discover> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const K3Page(),
+                builder: (context) => K3Page( userId: widget.userId, points: widget.points,),
               ),
             );
           },

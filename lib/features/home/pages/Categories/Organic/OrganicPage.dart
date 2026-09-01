@@ -1,3 +1,4 @@
+import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -8,9 +9,17 @@ import 'package:eltrack_mobile/features/home/service/nearestDropoff_service.dart
 import 'package:eltrack_mobile/features/home/pages/Categories/WasteGuide/WasteGuidePage.dart';
 
 import 'package:eltrack_mobile/features/home/pages/Categories/Articles/ArticlePage.dart';
+import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
 
 class OrganicPage extends StatefulWidget {
-  const OrganicPage({super.key});
+  final int userId;
+  final int points;
+
+  const OrganicPage({
+    super.key,
+    required this.userId,
+    required this.points,
+  });
 
   @override
   State<OrganicPage> createState() => _OrganicPageState();
@@ -28,6 +37,8 @@ class _OrganicPageState extends State<OrganicPage> {
   List<dynamic> nearestDropOffs = [];
 
   Position? currentPosition;
+
+  
 
   @override
   void initState() {
@@ -177,7 +188,36 @@ class _OrganicPageState extends State<OrganicPage> {
               ),
             ),
 
-            _buildBottomNavigation(),
+            EltrackBottomNav(
+              currentIndex: 0,
+
+              onHome: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+              },
+
+              onScanner: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => scannerPage(
+                      userId: widget.userId,
+                      points: widget.points,
+                    ),
+                  ),
+                );
+              },
+
+              onStore: () {
+                // nanti Store
+              },
+
+              onProfile: () {
+                // nanti Profile
+              },
+            ),
           ],
         ),
       ),
@@ -243,11 +283,13 @@ class _OrganicPageState extends State<OrganicPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                const ArticlePage(
+            builder: (context) => ArticlePage(
+              userId: widget.userId,
+              points: widget.points,
               category: 'organic',
               title: 'Organic',
             ),
+
           ),
         );
       },
@@ -503,10 +545,12 @@ class _OrganicPageState extends State<OrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'organic',
                   typeName: 'Green Scraps',
-                ),
+                )
               ),
             );
           },
@@ -519,10 +563,12 @@ class _OrganicPageState extends State<OrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'organic',
                   typeName: 'Brown Scraps',
-                ),
+                )
               ),
             );
           },
@@ -535,10 +581,12 @@ class _OrganicPageState extends State<OrganicPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const WasteGuidePage(
+                builder: (context) => WasteGuidePage(
+                  userId: widget.userId,
+                  points: widget.points,
                   category: 'organic',
                   typeName: 'Avoid Scraps',
-                ),
+                )
               ),
             );
           },
@@ -901,46 +949,4 @@ class _OrganicPageState extends State<OrganicPage> {
     );
   }
 
-
-  Widget _buildBottomNavigation() {
-    return Container(
-      height: 58,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x26000000),
-            blurRadius: 6,
-            offset: Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceAround,
-        children: const [
-          Icon(
-            Icons.home_rounded,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.center_focus_weak,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.storefront_outlined,
-            color: darkGreen,
-            size: 22,
-          ),
-          Icon(
-            Icons.person,
-            color: darkGreen,
-            size: 22,
-          ),
-        ],
-      ),
-    );
-  }
 }
