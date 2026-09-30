@@ -45,3 +45,21 @@ app.*.map.json
 /android/app/release
 
 /android/build/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Secrets / credentials
+secrets.dart
+secret.dart
+credentials.dart
+key.properties
+
+# Android signing
+*.jks
+*.keystore
+
+# Local Android configuration
+android/local.properties

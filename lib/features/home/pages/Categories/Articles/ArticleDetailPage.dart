@@ -285,33 +285,8 @@ class ArticleDetailPage extends StatelessWidget {
 
             EltrackBottomNav(
               currentIndex: 0,
-
-              onHome: () {
-                Navigator.popUntil(
-                  context,
-                  (route) => route.isFirst,
-                );
-              },
-
-              onScanner: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => scannerPage(
-                      userId: userId,
-                      points: points,
-                    ),
-                  ),
-                );
-              },
-
-              onStore: () {
-                // nanti Store
-              },
-
-              onProfile: () {
-                // nanti Profile
-              },
+              userId: userId,
+              points: points,
             ),
           ],
         ),

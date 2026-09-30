@@ -285,25 +285,8 @@ class _ScannerPageState extends State<scannerPage> {
 
             EltrackBottomNav(
               currentIndex: 1,
-
-              onHome: () {
-                Navigator.popUntil(
-                  context,
-                  (route) => route.isFirst,
-                );
-              },
-
-              onScanner: () {
-                // masih berada di fitur scanner
-              },
-
-              onStore: () {
-                // nanti arahkan ke Store
-              },
-
-              onProfile: () {
-                // nanti arahkan ke Profile
-              },
+              userId: widget.userId,
+              points: widget.points,
             ),
           ],
         ),

@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:eltrack_mobile/features/home/pages/Categories/scanner/scannerPage.dart';
 import 'package:flutter/material.dart';
@@ -260,30 +260,8 @@ class _DiscoverPageState extends State<Discover> {
                 // bottom bar selalu ada
                 EltrackBottomNav(
                   currentIndex: 0,
-
-                  onHome: () {
-                    // sudah di Home
-                  },
-
-                  onScanner: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => scannerPage(
-                          userId: widget.userId,
-                          points: widget.points,
-                        ),
-                      ),
-                    );
-                  },
-
-                  onStore: () {
-                    // nanti Store
-                  },
-
-                  onProfile: () {
-                    // nanti Profile
-                  },
+                  userId: widget.userId,
+                  points: widget.points,
                 ),
               ],
             ),
@@ -1015,15 +993,8 @@ class _DiscoverPageState extends State<Discover> {
             right: 0,
             top: 0,
             bottom: 64,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 5,
-                sigmaY: 5,
-              ),
-              child: Container(
-                color: Colors.white
-                    .withOpacity(.15),
-              ),
+            child: Container(
+              color: Colors.white.withOpacity(.75),
             ),
           ),
 

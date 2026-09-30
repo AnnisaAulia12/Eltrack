@@ -187,33 +187,8 @@ class _NonOrganicPageState extends State<NonOrganicPage> {
 
             EltrackBottomNav(
               currentIndex: 0,
-
-              onHome: () {
-                Navigator.popUntil(
-                  context,
-                  (route) => route.isFirst,
-                );
-              },
-
-              onScanner: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => scannerPage(
-                      userId: widget.userId,
-                      points: widget.points,
-                    ),
-                  ),
-                );
-              },
-
-              onStore: () {
-                // nanti Store
-              },
-
-              onProfile: () {
-                // nanti Profile
-              },
+              userId: widget.userId,
+              points: widget.points,
             ),
           ],
         ),

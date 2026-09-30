@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:eltrack_mobile/features/home/widgets/eltrackBottomNav.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class RecyclingDetailPage extends StatefulWidget {
   final int userId;
   final int points;
@@ -308,25 +311,8 @@ class _RecyclingDetailPageState
 
             EltrackBottomNav(
               currentIndex: 1,
-
-              onHome: () {
-                Navigator.popUntil(
-                  context,
-                  (route) => route.isFirst,
-                );
-              },
-
-              onScanner: () {
-                // masih berada di fitur scanner
-              },
-
-              onStore: () {
-                // nanti arahkan ke Store
-              },
-
-              onProfile: () {
-                // nanti arahkan ke Profile
-              },
+              userId: widget.userId,
+              points: widget.points,
             ),
           ],
         ),
@@ -629,21 +615,70 @@ class _RecyclingDetailPageState
     );
   }
 
-  void _completeRecycling() {
+  Future<void> _completeRecycling() async {
+    try {
+      final uri = Uri.parse(
+        'http://10.0.2.2/eltrack_recycling/recycling_history_API/recycling_history.php',
+      );
+
+      final response = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'user_id': widget.userId,
+          'waste_category':
+              widget.idea['waste_category'],
+          'item_name':
+              widget.idea['item_name'],
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (!mounted) return;
+
+      if (data['success'] == true) {
+        _showCompletedDialog();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              data['message'] ??
+                  'Failed to save recycling activity',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Error: $e',
+          ),
+        ),
+      );
+    }
+  }
+
+  void _showCompletedDialog() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20),
           ),
           title: const Text(
             'Recycling Completed!',
             textAlign: TextAlign.center,
           ),
           content: const Text(
-            'Great! You have completed all materials, tools, and recycling steps.',
+            'Your recycling activity has been recorded.',
             textAlign: TextAlign.center,
           ),
           actionsAlignment:
@@ -651,6 +686,7 @@ class _RecyclingDetailPageState
           actions: [
             ElevatedButton(
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
